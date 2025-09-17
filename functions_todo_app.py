@@ -1,5 +1,8 @@
+# The below line is how we declare constants.
+FILEPATH = "todos.txt"
+
 # Since we know that filepath will always be "todos.txt", we can use default arguments
-def get_todos(filepath="todos.txt"):
+def get_todos(filepath=FILEPATH):
     """ Read a text file and return the contents
     as a list
     """
@@ -8,7 +11,7 @@ def get_todos(filepath="todos.txt"):
     return todos_local
 
 
-def write_todos(todos_arg, filepath="todos.txt"):
+def write_todos(todos_arg, filepath=FILEPATH):
     """ Write the contents of a list to a text file"""
     with open(filepath, "w") as file_local:
         file_local.writelines(todos_arg)
