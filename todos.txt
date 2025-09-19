@@ -1,10 +1,9 @@
 Get up
 Run
-Walk
-Do yoga
+Do cardio
 Go to work
-Write a code
-Drink coffee
-Code again
-Take a tea break
-Finish your work
+Do coding
+Take a coffee break
+Do more coding
+Attend meeting
+Take a lunch break
