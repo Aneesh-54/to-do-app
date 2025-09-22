@@ -58,6 +58,9 @@ while True:
             window["todos"].update(values=todos)
             window["todo"].update(value="")
 
+        case "Exit":
+            break
+
         case sg.WIN_CLOSED:
             break
 
