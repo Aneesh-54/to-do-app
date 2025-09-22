@@ -6,13 +6,17 @@ import FreeSimpleGUI as sg
 label = sg.Text("Type in a to-do")
 input_box = sg.InputText(tooltip="Enter a todo", key="todo")
 add_button = sg.Button("Add")
-output_box = sg.Listbox(values=fta.get_todos(), key="todos",
-                        enable_events=True, size=[45, 15])
-edit_button = sg.Button("Edit")
+output_box = [[sg.Listbox(values=fta.get_todos(), key="todos",
+                        enable_events=True, size=[45, 15])]]
+edit_button = [sg.Button("Edit")]
+complete_button = [sg.Button("Complete")]
+exit_button = sg.Button("Exit")
+left_col_content = sg.Column(output_box)
+right_col_content = sg.Column([edit_button, complete_button])
 
 window = sg.Window("My to-do app",
                    [[label, add_button], [input_box],
-                    [output_box, edit_button]],
+                    [[left_col_content, right_col_content]], [exit_button]],
                    font=["Helvetica", 19])
 
 # Check for "events" and alter "values"
@@ -23,22 +27,39 @@ while True:
     match event:
         case "Add":
             todos = fta.get_todos()
+
             new_todo = values["todo"].capitalize() + "\n"
             todos.append(new_todo)
+
             fta.write_todos(todos)
             window["todos"].update(values=todos)
+            window["todo"].update(value="")
 
         case "Edit":
+            todos = fta.get_todos()
+
             todo_to_edit = values["todos"][0]
             new_todo = values["todo"].capitalize() + "\n"
-
-            todos = fta.get_todos()
             index = todos.index(todo_to_edit)
             todos[index] = new_todo
+
             fta.write_todos(todos)
             window["todos"].update(values=todos)
+            window["todo"].update(value="")
+
+        case "Complete":
+            todos = fta.get_todos()
+
+            todo_to_complete = values["todos"][0]
+            index = todos.index(todo_to_complete)
+            todos.pop(index)
+
+            fta.write_todos(todos)
+            window["todos"].update(values=todos)
+            window["todo"].update(value="")
 
         case sg.WIN_CLOSED:
             break
+
 window.close()
 
