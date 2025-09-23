@@ -24,14 +24,16 @@ window = sg.Window("My to-do app",
 
 # Check for "events" and alter "values"
 while True:
-    event, values = window.read(timeout=10)
-    window["clock"].update(value=time.strftime("%b %d, %Y %I:%M:%S %p"))
-    print(event)
-    print(values)
+    event, values = window.read(timeout=500)
+    if event == sg.WIN_CLOSED:
+        break
+    else:
+        window["clock"].update(value=time.strftime("%b %d, %Y %H:%M:%S"))
+
     match event:
         case "Add":
             if values["todo"] == "":
-                sg.popup("Please enter a task.", font=["Helvetica", 19])
+                sg.popup("Please enter a task.", font=("Helvetica", 19))
             else:
                 todos = fta.get_todos()
 
@@ -45,7 +47,7 @@ while True:
         case "Edit":
             try:
                 if values["todo"] == "":
-                    sg.popup("Please enter the new task.", font=["Helvetica", 19])
+                    sg.popup("Please enter the new task.", font=("Helvetica", 19))
                 else:
                     todos = fta.get_todos()
 
@@ -58,7 +60,7 @@ while True:
                     window["todos"].update(values=todos)
                     window["todo"].update(value="")
             except IndexError:
-                sg.popup("Please select a task to edit.", font=["Helvetica", 19])
+                sg.popup("Please select a task to edit.", font=("Helvetica", 19))
 
         case "Complete":
             try:
@@ -72,12 +74,9 @@ while True:
                 window["todos"].update(values=todos)
                 window["todo"].update(value="")
             except IndexError:
-                sg.popup("Please select a task to complete.", font=["Helvetica", 19])
+                sg.popup("Please select a task to complete.", font=("Helvetica", 19))
 
         case "Exit":
-            break
-
-        case sg.WIN_CLOSED:
             break
 
 window.close()
